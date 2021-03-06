@@ -1,5 +1,228 @@
+*{
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.paraDiv{
+  box-sizing: border-box;
+  position: fixed;
+  top: 75px;
+  right: 5px;
+  display: flex;
+  flex-direction: column;
+  /* justify-items: flex-end; */
+  /* align-items: flex-end; */
+  /* text-align: start; */
+  width: 70%;
+  height: 82%;
+  /* margin-top: 10px; */
+  border: 1px solid rgba(184, 182, 182, 0.863);
+  border-left: none;
+  border-top: 0;
+  box-shadow: rgba(184, 182, 182, 0.863) 0 0 3px -2px;
+}
+
+.buttonSpan{
+  position: fixed;
+  right: 5px;
+  top: 5px;
+  border: 1px solid rgba(184, 182, 182, 0.863);
+  border-left: none;
+  width: 69.9%;
+  /* box-shadow: gray 0 0 15px 1px; */
+}
+
+.buttonSpan2{
+  border-right: none;
+  border-left: 1px solid rgba(184, 182, 182, 0.863);
+  position: fixed;
+  left: 5px;
+  width: 29.5%;
+  height: 73px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+}
+
+.profileName{
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  margin: 30px;
+  font-size: 30px;
+  /* margin-left: center; */
+  /* margin: none; */
+  /* margin-bottom: 20px; */
+   /* margin-top: 5px; */
+}
+
+.userName{
+  position: relative;
+  margin-top: 80px;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.input1{
+  /* position: fixed; */
+  /* bottom: 10px; */
+  /* right: 10px; */
+  border: 1px solid rgba(184, 182, 182, 0.863);
+  box-shadow: rgba(184, 182, 182, 0.863) 0 0 10px 3px;
+  /* box-shadow: gray 10px 2px 15px 2px; */
+  /* padding: 20px 300px; */
+  font-size: 20px;
+  height: 53px;
+  width: 63.2%;
+  position: fixed;
+  bottom: 2px;
+  right: 95px;
+  padding: 10px;
+}
+
+.resultPara{
+  padding: 20px;
+  font-size: 20px;
+  /* min-height: 50px; */
+  min-width: 300px;
+  max-width: 600px;
+  border: 1px solid rgba(184, 182, 182, 0.863);
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+}
+
+.span{
+display: flex;
+flex-direction: row;
+width: 100px;
+position: relative;
+}
+
+.h1{
+  padding: 3vh 0;
+}
+
 .App {
   text-align: center;
+  height: 95vh;
+}
+
+.buttons{
+  height: 53px;
+  width: 6.5%;
+  position: fixed;
+  bottom: 2px;
+  right: 5px;
+  border: 2px solid gray;
+  background-color: yellowgreen;
+  color: white;
+  font-size: 20px;
+  box-shadow: rgba(184, 182, 182, 0.863) 0 0 10px 5px;
+  cursor: pointer;
+}
+
+.form{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* justify-content: space-around; */
+}
+
+.search{
+  padding: 5px;
+  /* background-color: gray; */
+}
+
+h3{
+  align-self: center;
+  font-size: 32px;
+}
+
+.input{
+  text-align: center;
+  align-self: center;
+  height: 7vh;
+  font-size: 25px;
+  margin: 0 3vw;
+}
+
+.h1{
+  font-weight: bold;
+  font-size: 40px;
+  margin-bottom: 0;
+  color: brown;
+}
+
+.button{
+margin: 10px 10px;
+display: flex;
+margin-left: auto;
+justify-items: flex-end;
+align-self: flex-end;
+padding: 10px;
+font-weight: bold;
+font-size: 22px;
+color: brown;
+background-color: orange;
+text-align: center;
+box-shadow: rgba(184, 182, 182, 0.863) 0 0 10px 2px;
+cursor: pointer;
+}
+
+.profilePic{
+  border-radius: 100%;
+  border: 2px solid wheat;
+  margin: 2px;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* align-self: center; */
+  /* justify-self: center; */
+  /* margin: 100px; */
+}
+
+.userPara{
+  padding: none;
+  cursor: pointer;
+}
+
+.checkbox{
+  margin-right: 10px;
+}
+
+.submit{
+  align-self: center;
+  padding: 2px 10px;
+  height: 8vh;
+}
+
+input{
+  text-align: center;
+}
+
+.edit{
+  padding: 2px 8px;
+}
+
+.text{
+  margin: auto;
+  width: 85vw;
+  margin-bottom: 0;
+  color: darkblue;
+  font-size: 110%;
+  padding-bottom: 1vh;
+}
+
+.userDiv{
+  display: flex;
+  flex-direction: column;
+  height: 99vh;
+  width: 29.5%;
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  border-top: 1px solid rgba(184, 182, 182, 0.863);
+  border-left: 1px solid rgba(184, 182, 182, 0.863);
 }
 
 .App-logo {

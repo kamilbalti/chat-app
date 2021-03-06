@@ -1,0 +1,72 @@
+.form{
+    /* box-sizing: border-box; */
+    /* border-top: none; */
+    /* border-bottom: none; */
+    /* border-radius: 0; */
+    border: 5px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: lightyellow;
+    justify-content: center;
+    min-width: 500px;
+    /* height: 90vh; */
+}
+.div{
+    border: none;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+}
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: lightyellow; */
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    /* border-radius: 10%; */
+}
+.input{
+    margin: 10px;
+    font-size: 16px;
+    padding: 10px;
+    width: 80%;
+    text-align: left;
+    /* margin: 20px; */
+}
+.button10{
+    margin: 10px 0 0;
+    font-size: 20px;
+    padding: 2% 10%;
+    color: white;
+    background-color: darkcyan;
+}
+.para{
+    font-size: 16px;
+    color: red;
+}
+.p{
+    padding: 15px 0 25px;
+}
+.span{
+    height: 50%;
+    width: 90%;
+    background-color: silver;
+}
+.div2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-width: 200px;
+}
+.file{
+    /* background-color: tomato; */
+    width: 100px;
+    padding: 10px;
+}
