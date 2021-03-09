@@ -3,18 +3,16 @@
   box-sizing: border-box;
 }
 
-.paraDiv{
+.leftPart{
   box-sizing: border-box;
-  position: fixed;
-  top: 75px;
-  right: 5px;
   display: flex;
   flex-direction: column;
   /* justify-items: flex-end; */
   /* align-items: flex-end; */
   /* text-align: start; */
-  width: 70%;
-  height: 82%;
+  width: 30%;
+  min-width: 400px;
+  height: 100%;
   /* margin-top: 10px; */
   border: 1px solid rgba(184, 182, 182, 0.863);
   border-left: none;
@@ -23,21 +21,22 @@
 }
 
 .buttonSpan{
-  position: fixed;
-  right: 5px;
-  top: 5px;
   border: 1px solid rgba(184, 182, 182, 0.863);
   border-left: none;
-  width: 69.9%;
-  /* box-shadow: gray 0 0 15px 1px; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: rgba(156, 156, 156, 0.644) 0 0 5px 1px;
+  height: 73px;
+  box-sizing: border-box;
+  padding: 5px 8px;
 }
 
 .buttonSpan2{
   border-right: none;
   border-left: 1px solid rgba(184, 182, 182, 0.863);
-  position: fixed;
-  left: 5px;
-  width: 29.5%;
+  width: 100%;
+  padding: 5px 10px;
   height: 73px;
   display: flex;
   flex-direction: row;
@@ -48,7 +47,7 @@
   display: flex;
   flex-direction: row;
   align-self: center;
-  margin: 30px;
+  margin: 10px;
   font-size: 30px;
   /* margin-left: center; */
   /* margin: none; */
@@ -58,25 +57,25 @@
 
 .userName{
   position: relative;
-  margin-top: 80px;
-  margin-left: 20px;
+  margin-top: 20px;
   font-size: 20px;
 }
 
+.userListDiv {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid rgba(184, 182, 182, 0.863);
+}
+
 .input1{
-  /* position: fixed; */
-  /* bottom: 10px; */
-  /* right: 10px; */
   border: 1px solid rgba(184, 182, 182, 0.863);
   box-shadow: rgba(184, 182, 182, 0.863) 0 0 10px 3px;
   /* box-shadow: gray 10px 2px 15px 2px; */
   /* padding: 20px 300px; */
   font-size: 20px;
   height: 53px;
-  width: 63.2%;
-  position: fixed;
-  bottom: 2px;
-  right: 95px;
+  width: 80%;
   padding: 10px;
 }
 
@@ -86,7 +85,6 @@
   /* min-height: 50px; */
   min-width: 300px;
   max-width: 600px;
-  border: 1px solid rgba(184, 182, 182, 0.863);
   display: flex;
   flex-direction: row;
   align-self: flex-end;
@@ -110,10 +108,7 @@ position: relative;
 
 .buttons{
   height: 53px;
-  width: 6.5%;
-  position: fixed;
-  bottom: 2px;
-  right: 5px;
+  width: 20%;
   border: 2px solid gray;
   background-color: yellowgreen;
   color: white;
@@ -203,7 +198,19 @@ input{
 .edit{
   padding: 2px 8px;
 }
-
+.paraDiv {
+  height: calc( 100% - 73px );
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.inputDiv {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
 .text{
   margin: auto;
   width: 85vw;
@@ -213,15 +220,11 @@ input{
   padding-bottom: 1vh;
 }
 
-.userDiv{
+.rightPart{
   display: flex;
   flex-direction: column;
-  height: 99vh;
-  width: 29.5%;
-  position: fixed;
-  top: 5px;
-  left: 5px;
-  border-top: 1px solid rgba(184, 182, 182, 0.863);
+  height: 100vh;
+  width: 100%;
   border-left: 1px solid rgba(184, 182, 182, 0.863);
 }
 

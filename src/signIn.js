@@ -72,7 +72,7 @@ const SignIn = () => {
                   <span>
                     <label>
                       <input checked={inputCheck} className="checkbox" type="checkbox"
-                        onClick={() => checkInput()}/>
+                        onChange={() => checkInput()}/>
                         Show password
                     </label>
                   </span>

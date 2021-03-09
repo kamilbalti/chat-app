@@ -27,12 +27,23 @@ const SignUp = () => {
   const [ error, setError ] = useState(false);
   const dispatch = useDispatch();
   // console.log(picture, "picture");
+
+  // let hour = new Date()?.getHours();
+  // let minutes = new Date()?.getMinutes()
+  // let minute2;
+  // minutes < 10?
+  // minute2 = "0" + minutes:
+  // minute2 = minutes
+  // let time =  + hour + " : " + minute2 + "\n"
+
+
   const logUp = () => {
     const tempUserDetails = {
       username: userName,
       email: email,
       password: password,
     };
+
     // tempUserArr.push(userName);
     firebase
       .auth()
@@ -49,32 +60,32 @@ const SignUp = () => {
             tempUserDetails.userArr = userArr
             tempUserDetails.uid = res?.user?.uid
             tempUserDetails.profilePhoto = url;
-
+            
             firebase
-              .database()
-              .ref("Users/" + res?.user?.uid)
-              .set({
-                details: tempUserDetails,
-              })
-              .then(() => {
-                // console.log(detail, "before database ");
-                dispatch(setUser(res));
-                firebase.database().ref(user?.uid + "members/")
-                .then(() => {
-                  let userArr2 = Array.isArray(userArr)?[...userArr]:[]
-                  if(userName !== false || userName !== "")
-                  userArr2.push(tempUserDetails?.userName)
-                  dispatch(setUserArr(userArr2))
-                })
-                .set({
-                  userArr: [...userArr],
-                  userDetail: { userName: userName, uid: user?.uid },
-                  message: [...realArr]
-                })
-              });
+            .database()
+            .ref("Users/" + res?.user?.uid)
+            .set({
+              details: tempUserDetails?tempUserDetails:{},
+            })
+            .then(() => {
+              dispatch(setUser(res));
+            });
             dispatch(setCheck(true));
           });
-        });
+          // if(res?.user?.uid !== false || res?.user?.uid !== ""){
+          //     firebase.database().ref(res?.user?.uid + "/members/")
+          //       .set({
+          //         userArr: Array.isArray(userArr) ? [...userArr]: [],
+          //         userDetail: { userName: userName, uid: res?.user?.uid },
+          //         message: [...realArr]
+          //       })
+          //       .then(() => {
+          //         let userArr2 = Array.isArray(userArr)?[...userArr]:[]
+          //         if(userName !== false)
+          //         userArr2.push(tempUserDetails?.userName)
+          //         dispatch(setUserArr(userArr2))
+          //       })}
+          })
       })
       .catch((err) => {
         setError(err);
@@ -131,7 +142,8 @@ const SignUp = () => {
                 type={inputType} placeholder="Password" />
               <span>
                 <label>
-                <input onChange={() => checkInput()} checked={inputCheck} className="checkbox" type="checkbox" />
+                <input checked={inputCheck} className="checkbox" type="checkbox"
+                onChange={() => checkInput()} />
                 Show password</label>
               </span>
               {error ? (

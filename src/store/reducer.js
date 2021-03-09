@@ -1,6 +1,6 @@
 // import { act } from "react-dom/test-utils";
 
-import { Set_Detail, Set_Data, Set_Call, Set_Temp, Set_Sort, Set_Input1, Set_Input2, Set_Num, Set_RealArr, Set_RedoArr, Set_UndoArr, Set_User, Set_User2, Set_UserName, Set_UserArr, Set_PictureUrl, Set_Check, Set_UserDetail } from "./actiontype";
+import { Set_Detail, Set_Data, Set_Call, Set_Temp, Set_Sort, Set_Input1, Set_Input2, Set_Num, Set_RealArr, Set_RedoArr, Set_UndoArr, Set_User, Set_User2, Set_UserName, Set_UserArr, Set_PictureUrl, Set_Check, Set_UserDetail, Set_Focus } from "./actiontype";
 
 const initialState = {
     realArr: [],
@@ -19,7 +19,8 @@ const initialState = {
     userArr: [],
     pictureUrl: "",
     check: false,
-    userDetail: {}
+    userDetail: {},
+    focus: false
 };
 
 
@@ -69,6 +70,11 @@ const Reducer = (state = initialState, action) => {
             return{
                  ...state,
                 user: action.payload
+            }
+        case Set_Focus:
+            return{
+                 ...state,
+                focus: action.payload
             }
         case Set_User2:
             return{

@@ -1,6 +1,6 @@
 import { Set_Detail, Set_UserArr, Set_Input1, Set_Call, Set_Input2, Set_Num,
     Set_RealArr, Set_RedoArr, Set_Sort, Set_Temp, Set_UndoArr, Set_User,
-    Set_User2, Set_Data, Set_UserName, Set_PictureUrl, Set_Check, Set_UserDetail } from "./actiontype";
+    Set_User2, Set_Data, Set_UserName, Set_PictureUrl, Set_Check, Set_UserDetail, Set_Focus } from "./actiontype";
 
 export const setInput1 = (payload) => ({
     type: Set_Input1,
@@ -89,5 +89,10 @@ export const setCheck = (payload) => ({
 
 export const setUserDetail = (payload) => ({
     type: Set_UserDetail,
+    payload,
+})
+
+export const setFocus = (payload) => ({
+    type: Set_Focus,
     payload,
 })
