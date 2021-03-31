@@ -1,9 +1,9 @@
+import { React ,useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import SignIn from "./signIn";
 import SignUp from "./signUp";
 import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react/cjs/react.development";
 import firebase from "./firebase";
 import { setUser } from "./store/action";
 
@@ -12,12 +12,9 @@ const Router2 = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     firebase.auth().onAuthStateChanged((isUser) => {
-      // console.log(isUser, "user1");
       dispatch(setUser(isUser));
-      // console.log(user);
     });
   }, []);
-  // console.log(user, "user");
   if (user === "loading")
     return (
       <div
@@ -28,7 +25,7 @@ const Router2 = () => {
           alignItems: "center",
         }}
       >
-        <Spinner animation="border" variant={"success"} />
+        <Spinner padding="100px" animation="border" variant={"success"} />
       </div>
     );
     // if(user === "user2"){

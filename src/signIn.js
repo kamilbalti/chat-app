@@ -5,7 +5,7 @@ import firebase from "./firebase";
 import "./signIn.css";
 import "./App.css"
 import { setUser } from "./store/action";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 
 
 const SignIn = () => {
@@ -66,7 +66,7 @@ const SignIn = () => {
                   <input className="input" value={email} onChange={(e) => setEmail(e.target.value)}
                     type="text" placeholder="Email Id" />
                   {/* <input className="input" value={userName} onChange={(e) => setUserName(e.target.value)} */}
-                    {/* type="text" placeholder="User Name" /> */}
+                    {/* type="text" placeholder="User Name" /> */}  
                   <input className="input" value={password} onChange={(e) => setPassword(e.target.value)}
                     type={inputType} placeholder="Password" />
                   <span>

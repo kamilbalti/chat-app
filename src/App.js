@@ -4,8 +4,6 @@ import firebase from "./firebase";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setRealArr,
-  setUndoArr,
-  setRedoArr,
   setInput1,
   setInput2,
   setNum,
@@ -16,8 +14,11 @@ import {
   setDetail,
   setCheck,
   setFocus,
+  setTypingUsers,
 } from "./store/action";
 import moment from "moment";
+import { Spinner } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   const {
@@ -29,177 +30,409 @@ const App = () => {
     focus,
     user,
     userName,
+    typingUsers,
+    input1,
   } = useSelector((e) => e?.reducer1);
-  const [object, setObject] = useState(false);
-  // const [detail, setDetail] = useState({});
-  // const [time, setTime] = useState(new Date());
+  const [inputCheck, setInputCheck] = useState(false);
+  const [inputType, setInputType] = useState("password");
+  const [password2, setPassword2] = useState("");
+  const [email2, setEmail2] = useState("");
+  const [userName2, setUserName2] = useState("");
+  const [checked, setChecked] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [checkSetting, setCheckSetting] = useState(false);
+  const [tempArr, setTempArr] = useState([]);
+  const [messageNumber, setMessageNumber] = useState(0);
+  const [search, setSearch] = useState("");
+  const [typingArr, setTypingArr] = useState([]);
+  const [temp, setTemp] = useState(true);
   const dispatch = useDispatch();
   const uid = user?.uid;
-  // const [ pictureUrl, setPictureUrl] = useState("")
 
   useEffect(() => {
+    dispatch(setFocus(false));
     firebase
       .database()
       .ref("Users/")
       .on("value", (res) => {
-        let users = res.val();
-        let ourData = res?.val
-          ? Object.values(users).find((item) => item?.details?.uid === uid)
-          : {};
-        let otherUsers = res?.val
-          ? Object.values(users).filter((item) => item?.details?.uid !== uid)
-          : [];
-        dispatch(setCheck(false));
-        dispatch(setDetail(ourData ? ourData : {}));
-        dispatch(setUserArr(otherUsers));
-        // let tempUserArr = [...userArr]
-        // tempUserArr.push(detail?.details?.username)
+        let users = res.val() ? res.val() : "";
+        let ourData = users[uid];
+        let otherUsers =
+          res.val() && users
+            ? Object?.values(users)?.filter(
+                (item5) => item5?.details?.uid !== uid
+              )
+            : [];
+        let tempTypingArr = [];
+        otherUsers?.forEach((item) => {
+          let tempType = item?.typingArr || [];
+          tempTypingArr.push(...tempType);
+          dispatch(setTypingUsers(tempTypingArr));
+
+          dispatch(setCheck(false));
+          dispatch(setDetail(ourData ? ourData : {}));
+          dispatch(setUserArr(otherUsers ? otherUsers : []));
+          setTempArr(otherUsers || []);
+          console.log(tempArr, "tempArray");
+        });
       });
-    // firebase.database().ref(uid + "/members/").on("value", (res) => {
-    //   if(Array.isArray(res?.userArr) || res?.userArr)
-    // })
-  }, []);
+    setTimeout(() => setTemp(false), 1000);
+    // firebase
+    //   .database()
+    //   .ref("Users/")
+    //   .on("value", (res) => {
+    //     let users = res.val() || {};
+    //     let otherUsers =
+    //       res.val() && users
+    //         ? Object?.values(users)?.filter(
+    //             (item5) => item5?.details?.uid !== uid
+    //           )
+    //         : [];
+    //     let tempTypingArr = [];
+    //     otherUsers?.forEach((item) => {
+    //       let tempType = item?.typingArr || [];
+    //       tempTypingArr.push(...tempType);
+    //       dispatch(setTypingUsers(tempTypingArr));
+    //     });
+    //   })
+  }, [user]);
 
-  // // if(user?.uid !== false || user?.uid !== ""){
-  //     firebase.database().ref(uid + "/members/")
-  //       .set({
-  //         userArr: Array.isArray(userArr) && userArr ? userArr: [],
-  //         userDetail: { userName: detail?.userName, uid: detail?.uid},
-  //         message: [...realArr]
-  //       })
-  //         .then(() => {
-  //           let userArr2 = Array.isArray(userArr)?[...userArr]:[]
-  //           if(userName !== false && userName !== "")
-  //           userArr2.push(detail?.userName)
-  //           else
-  //           dispatch(setUserArr([]))
-  //           if(Array.isArray(userArr2)&&userArr2)
-  //           dispatch(setUserArr(userArr2))
-  //           else
-  //           dispatch(setUserArr([]))
-  //         })
-  // }
-
-  // console.log(userName, "userName")
-  // console.log(userArr)
-
-  // useEffect(() => {
-  //   let object2;
-  //   object2 = { input1: inputVal, input2: inputVal2 };
-  //   setObject(object2);
-  // }, [inputVal, inputVal2]);
-
-  // const submit = () => {
-  //   let submitArr = Array.isArray(realArr) ? [...realArr] : [];
-  //   submitArr.push(object);
-  //   let tempUndoArr = Array.isArray(undoArr)
-  //     ? [...undoArr, submitArr?.slice(0, submitArr?.length - 1)]
-  //     : [[{ input1: "", input2: "" }]];
-  //   firebase
-  //     .database()
-  //     .ref("messages/" + uid)
-  //     .set({
-  //       message: submitArr,
-  //       // undo: tempUndoArr,
-  //     });
-  //   // dispatch(setInput1(""));
-  //   dispatch(setInput2(""));
-  //   dispatch(setRedoArr([]));
-  // };
-
-  // const update = () => {
-  //   let tempUpdateArr = [...realArr];
-  //   let updateArr = Array.isArray(realArr) ? [...realArr] : [];
-  //   updateArr[num] = { input1: inputVal, input2: inputVal2 };
-  //   console.log(tempUpdateArr, "tempupdatedarr");
-  //   firebase
-  //     .database()
-  //     .ref("messages" + uid)
-  //     .set({
-  //       message: updateArr,
-  //       // undo: [...undoArr, [...tempUpdateArr]],
-  //     });
-  //   // dispatch(setInput1(""));
-  //   dispatch(setInput2(""));
-  //   dispatch(setNum(false));
-  // };
+  // console.log(user, "user")
 
   const AddMessage = () => {
+    setMessageNumber(messageNumber + 1);
     let time = Date.now();
-
     let messageArr = [...realArr];
-    let object = { time: time, inputValue: inputVal, sentBy: uid };
-    messageArr.push(object);
+    let messageObject = {
+      time: time,
+      inputValue: inputVal,
+      sentBy: uid,
+      number: messageNumber,
+    };
+    messageArr.push(messageObject);
     const messageId = [uid, focus].sort().join("");
 
     firebase
       .database()
       .ref("messages/" + messageId)
       .set({
-        // secondUser: { profilePhoto: focus?.details?.profilePhoto,
-        // userName: focus?.details?.profilePhoto},
+        typingArr: typingArr,
         message: messageArr,
       })
       .then(() => {
-        console.log(detail, "detail");
-        // if (!detail?.myMessages ||(Array.isArray(detail?.myMessages) && detail?.myMessages?.indexOf(uid) === -1)) {
-        // let tempMessagesArr = detail?.myMessages ? [...detail?.myMessages] : [];
-        // tempMessagesArr.push(uid);
-        // firebase
-        // .database()
-        // .ref("Users/" + uid + "/myMessages")
-        // .set(tempMessagesArr)
-        // .then(() => {
-        // console.log(tempMessagesArr)
-        // let tempArr = [...undo]
         dispatch(setInput1(""));
       })
       .catch((err) => {
         console.log(err, "error");
-        // });
       })
       .catch((err) => {
         console.log(err, "error");
       });
   };
-  // .then(()=>{
-  // })
-  // dispatch(setRealArr(messageArr))
-  // };
 
   const onsubmit = (e) => {
     e.preventDefault();
-    // console.log('a')
     AddMessage();
   };
 
   const logOut = () => {
-    let temp2 = firebase.auth().signOut();
-    dispatch(setUser(false));
+    let tempUid = uid;
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        firebase
+          .database()
+          .ref("Users/" + tempUid)
+          .update({
+            onlineStatus: Date.now()-16000,
+          });
+        dispatch(setUser(false));
+      });
   };
 
   const onFocus = (uid1) => {
     const messageId = [uid, uid1].sort().join("");
-
-    firebase
-      .database()
-      .ref("messages/" + messageId)
-      .on("value", (res) => {
-        let tempArr = res?.val()?.message ? res?.val()?.message : [];
-        dispatch(setRealArr(tempArr));
-        // let tempUserArr = res?.val()?.userArr ? res?.val()?.userArr: []
-        // dispatch(setUserArr(tempUserArr))
-      });
-    dispatch(setFocus(uid1));
+    dispatch(setFocus("loading"));
+    setTimeout(
+      () =>
+        firebase
+          .database()
+          .ref("messages/" + messageId)
+          .on("value", (res) => {
+            let tempArr = res?.val()?.message || [];
+            dispatch(setRealArr(tempArr));
+            dispatch(setFocus(uid1));
+          }),
+      100
+    );
   };
-  const focusedUser = userArr?.find((item) => item?.details?.uid === focus);
+  const focusedUser = userArr?.find((item3) => item3?.details?.uid === focus);
 
-  // const imgSrc = firebase.database().ref("Users/" + uid)?.userArr2?.profilePhoto
-  // console.log(detail?.details?.profilePhoto, "profile photo");
+  const back = () => {
+    dispatch(setFocus(false));
+  };
+
+  const typingFunction = () => {
+    const messageId = [uid, focus].sort().join("");
+    let typingArr2 =
+      typingArr && Array.isArray(typingArr) ? [...typingArr] : [];
+    typingArr2.push(messageId);
+    setTypingArr(typingArr2);
+  };
+  const typingRemoveFunction = () => {
+    const messageId = [uid, focus].sort().join("");
+    setTypingArr(typingArr.filter((item, index) => item !== messageId));
+  };
+
+  useEffect(() => {
+    firebase.database().ref(`Users/${uid}`).update({
+      typingArr: typingArr,
+    });
+  }, [typingArr]);
+
+  // useEffect(() => {
+  //   if(Array.isArray(userArr) && userArr !== [] )
+  //   setTempArr([...userArr])
+  //   // console.log(tempArr, "tempArray")
+  // },[checkSearch])
+
+  const searching = (e) => {
+    dispatch(setUserArr(tempArr));
+    dispatch(setFocus(false));
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    dispatch(
+      setUserArr(
+        userArr?.filter((item, index) =>
+          item.details.username.toLowerCase().includes(search.toLowerCase())
+        )
+      )
+    );
+  }, [search]);
+
+  const editCheck = () => {
+    setEdit(true);
+    setCheckSetting(false);
+  };
+
+  // const changeCheck = () => {
+  //   if (!checked) setChecked(true);
+  // };
+
+  // const changeCheck2 = () => {
+  //   if (checked) setChecked(false);
+  // };
+
+  const save = () => {
+    let detail2 = detail;
+    detail2.details.username = userName2;
+    detail2.details.password = password2;
+    detail2.details.email = email2;
+    // user.email = email2;
+    dispatch(setDetail(detail2));
+    setEdit(false);
+    setCheckSetting(false);
+    // firebase
+    // .database()
+    // .ref("Users/" + user?.uid)
+    // .set({
+    // details: detail2?.details ? detail2?.details: {},
+    // })
+  };
+
+  const close = () => {
+    setCheckSetting(false);
+    setEdit(false);
+  };
+
+  // const checkInput = () => {
+  //   if (inputCheck === true) {
+  //     setInputCheck(false);
+  //     setInputType("password");
+  //   } else {
+  //     setInputCheck(true);
+  //     setInputType("text");
+  //   }
+  // };
+
+  const setting = () => {
+    setCheckSetting(true);
+    setEmail2(detail.details.email);
+    setPassword2(detail.details.password);
+    setUserName2(detail.details.username);
+  };
+
+  let intervalStamp;
+  useEffect(() => {
+    if (user?.uid) {
+      console.log(user?.uid, "user");
+      intervalStamp = setInterval(() => {
+        let onlineStatus = Date.now();
+        if (user?.uid) {
+          // dispatch(setDetail(detail2));
+          firebase
+            .database()
+            .ref("Users/" + uid)
+            .update({
+              onlineStatus: onlineStatus,
+            });
+        }
+      }, 15000);
+    }
+    return ()=>{
+      clearInterval(intervalStamp)
+    }
+  }, []);
+
 
   return (
-    <div>
-      <div className="mainDiv">
+    <div className="mainDiv">
+      <span className={(focus ? "leftPart3 " : " ") + ` leftPart`}>
+        {!temp ? (
+          <>
+            <span className="buttonSpan buttonSpan2">
+              <img
+                className="profilePic"
+                src={detail?.details?.profilePhoto}
+                width="55px"
+                height="55px"
+              />
+              <p className="profileName">{detail?.details?.username}</p>
+            </span>
+            <input
+              className="searchingInput"
+              type="text"
+              placeholder="Search UserName Here"
+              value={search}
+              onChange={(e) => searching(e)}
+            />
+            <span className="userName">
+              {Array.isArray(userArr)
+                ? userArr?.map((item2, index2) => (
+                    <div
+                      key={index2}
+                      className={"userListDiv"}
+                      onClick={() => onFocus(item2.details.uid)}
+                    >
+                      <img
+                        className="profilePic"
+                        src={item2?.details?.profilePhoto}
+                        width="55px"
+                        height="55px"
+                      />
+                      <span
+                        className={
+                          Array.isArray(typingUsers) &&
+                          typingUsers?.indexOf(
+                            [item2?.details?.uid, uid].sort().join("")
+                          ) !== -1 &&
+                          typingUsers
+                            ? "userPara3"
+                            : "userPara userPara2"
+                        }
+                      >
+                        <p className="userName2">{item2?.details?.username}</p>
+                        {Array.isArray(typingUsers) &&
+                        typingUsers?.indexOf(
+                          [item2?.details?.uid, uid].sort().join("")
+                        ) !== -1 ? (
+                          <p className="typingPara">Typing...</p>
+                        ) : (
+                          false
+                        )}
+                        <p className="typingPara">
+                          {Date.now() < item2?.onlineStatus + 15000
+                            ? "Online"
+                            : ""}
+                        </p>
+                      </span>
+                      <p>{realArr?.number}</p>
+                    </div>
+                  ))
+                : false}
+            </span>
+          </>
+        ) : (
+          <span className="leftPart2">
+            <Spinner
+              animation="border"
+              variant="secondary"
+              className="spinner"
+            />
+          </span>
+        )}
+      </span>
+      {/* {focus ? (
+        temp ? (
+          <span className="leftPart leftPart2">
+            <Spinner
+              animation="border"
+              variant="secondary"
+              className="spinner"
+            />
+          </span>
+        ) : (
+          <span className="leftPart leftPart3">
+            <span className="buttonSpan buttonSpan2">
+              <img
+                className="profilePic"
+                src={detail?.details?.profilePhoto}
+                width="55px"
+                height="55px"
+              />
+              <p className="profileName">{detail?.details?.username}</p>
+            </span>
+            <span className="userName">
+              {Array.isArray(userArr)
+                ? userArr?.map((item2, index2) => (
+                    <div
+                      key={index2}
+                      className={"userListDiv"}
+                      onClick={() => onFocus(item2?.details?.uid)}
+                    >
+                      <img
+                        className="profilePic"
+                        src={item2?.details?.profilePhoto}
+                        width="55px"
+                        height="55px"
+                      />
+                      {console.log(typingUsers, "log")}
+                      <span className="userPara">
+                        <p>{item2?.details?.username}</p>
+                        {Array.isArray(typingUsers) &&
+                          typingUsers?.indexOf(
+                            [item2?.details?.uid, uid].sort().join("")
+                          ) !== -1 && <p>Typing</p>}
+                      </span>
+                    </div>
+                  ))
+                : false}
+            </span>
+          </span>
+        )
+      ) : temp ? (
+        <span className="leftPart leftpart2">
+          <span className="buttonSpan buttonSpan2">
+            <img
+              className="profilePic"
+              src={detail?.details?.profilePhoto}
+              width="55px"
+              height="55px"
+            />
+            <p className="profileName">{detail?.details?.username}</p>
+          </span>
+          <span className="rightPart2">
+            <Spinner
+              animation="border"
+              variant="secondary"
+              className="spinner"
+            />
+          </span>
+        </span>
+      ) : (
         <span className="leftPart">
           <span className="buttonSpan buttonSpan2">
             <img
@@ -213,65 +446,250 @@ const App = () => {
           <span className="userName">
             {Array.isArray(userArr) && userArr
               ? userArr?.map((item2, index2) => (
-                  <div className={"userListDiv"}>
+                  <div
+                    key={item2}
+                    className={"userListDiv"}
+                    onClick={() => onFocus(item2?.details?.uid)}
+                  >
                     <img
                       className="profilePic"
                       src={item2?.details?.profilePhoto}
                       width="55px"
                       height="55px"
                     />
-                    <p
-                      key={item2}
-                      onClick={() => onFocus(item2?.details?.uid)}
-                      className="userPara"
-                    >
-                      {item2?.details?.username}
-                    </p>
+                    <span className="userPara">
+                      <p>{item2?.details?.username}</p>
+                      {Array.isArray(typingUsers) &&
+                        typingUsers?.indexOf(
+                          [item2?.details?.uid, uid].sort().join("")
+                        ) !== -1 && <p>Typing</p>}
+                    </span>
                   </div>
                 ))
-              : []}
+              : false}
           </span>
         </span>
-        <span className="rightPart">
+      )} */}
+
+      {/* {focus === "loading" ? ( */}
+      {/* <span className="rightPart">
           <span className="buttonSpan">
-            <img
-              className="profilePic"
-              src={focusedUser?.details?.profilePhoto}
-              width="65px"
-              height="65px"
-            />
-            <p className="profileName">{focusedUser?.details?.username}</p>
+            <button onClick={() => back()} className="back">
+              Back
+            </button>
             <button className="button" onClick={logOut}>
               Sign Out
             </button>
+            <span className="settingSpan">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Windows_Settings_app_icon.png"
+                className="setting"
+                onClick={() => setting()}
+              />
+            </span>
           </span>
-          {focus && (
-            <span className="paraDiv">
-              <div>
-                {realArr?.map((item, index) => (
-                  <>
-                    <span className="time">{moment(item?.time).calendar()}
-                    <p key={item} className="resultPara">
+          <span className="rightPart2">
+            <Spinner animation="border" variant="success" className="spinner" />
+          </span>
+        </span> */}
+      {/* ) : focus ? ( */}
+      <span className={(focus ? "rightPart3 " : " ") + " rightPart "}>
+        <span className="buttonSpan">
+          <button onClick={() => back()} className="back">
+            Back
+          </button>
+          {focus && focus !== "loading" ? (
+            <img
+              className="profilePic"
+              src={focusedUser?.details?.profilePhoto}
+              width="55px"
+              height="55px"
+            />
+          ) : (
+            false
+          )}
+          <span
+            className={
+              Array.isArray(typingUsers) &&
+              typingUsers?.indexOf(
+                [focusedUser?.details?.uid, uid].sort().join("")
+              ) !== -1 &&
+              typingUsers
+                ? "userPara3"
+                : "userPara userPara2"
+            }
+          >
+            <p className="profileName">{focusedUser?.details?.username}</p>
+            {Array.isArray(typingUsers) &&
+              typingUsers?.indexOf(
+                [focusedUser?.details?.uid, uid].sort().join("")
+              ) !== -1 && <p className="typingPara ">Typing...</p>}
+              <p className="typingPara"> {Date.now() < focusedUser?.onlineStatus + 15000 ? "Online" : ""} </p>
+            {/* {Array.isArray(typingUsers) &&
+              typingUsers?.indexOf(
+                [focusedUser?.details?.uid, uid].sort().join("")
+              ) !== -1 && <p className="typingPara">Typing...</p>} */}
+          </span>
+          <button className="button" onClick={() => logOut()}>
+            Sign Out
+          </button>
+          <span className="settingSpan" onClick={() => setting()}>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Windows_Settings_app_icon.png"
+              className="setting"
+            />
+          </span>
+        </span>
+        {checkSetting || edit ? (
+          <span className="settingList">
+            <span className="closeSpan">
+              <button className="closeSetting" onClick={() => close()}>
+                X
+              </button>
+            </span>
+            {checkSetting ? (
+              <span className="labelPara">
+                <p onClick={() => editCheck()}>Edit profile</p>
+                <button onClick={() => save()} className="button">
+                  Save
+                </button>
+              </span>
+            ) : (
+              <span className="labelPara">
+                <span className="changeUserSpan">
+                  <p className="changeUser">UserName :</p>
+                  <input
+                    className="changeInputUser"
+                    placeholder="User Name"
+                    value={userName2}
+                    onChange={(e) => setUserName2(e.target.value)}
+                  />
+                </span>
+                <input type="file" />
+                <button onClick={() => save()} className="button">
+                  Save
+                </button>
+              </span>
+            )}
+          </span>
+        ) : (
+          false
+        )}
+        <span className="paraDiv">
+          <div className="paraDiv2">
+            {focus === "loading" ? (
+              <span className="rightPart2">
+                <Spinner
+                  animation="border"
+                  variant="success"
+                  className="spinner"
+                />
+              </span>
+            ) : focus || window?.innerWidth <= 768 ? (
+              realArr?.map((item, index) => (
+                <>
+                  {/* {item?.sentBy === detail?.details?.uid ? ( */}
+                  <div
+                    key={item}
+                    className={
+                      item?.sentBy === detail?.details?.uid
+                        ? "time"
+                        : "time2 time"
+                    }
+                  >
+                    <p className="timeNow">{moment(item?.time).calendar()}</p>
+                    <p
+                      className={
+                        item?.sentBy === detail?.details?.uid
+                          ? "resultPara time4"
+                          : "time3 resultPara"
+                      }
+                    >
                       {item?.inputValue}
                     </p>
-                    </span>
-                  </>
-                ))}
-              </div>
-              <form className={"inputDiv"} onSubmit={onsubmit}>
+                  </div>
+                  {/* ) : ( */}
+                  {/* <div className="time time2">
+                      <p className="timeNow">{moment(item?.time).calendar()}</p>
+                      <p className="resultPara time3">{item?.inputValue}</p>
+                      </div>
+                  )} */}
+                </>
+              ))
+            ) : (
+              <span className="rightPart2">
+                <p>Select User for chatting</p>
+              </span>
+            )}
+          </div>
+          {checked && focus ? (
+            focus ? (
+              <form className={"inputDiv "} onSubmit={onsubmit}>
                 <input
                   placeholder="Type your message Here"
                   className="input1"
                   type="text"
-                  value={inputVal}
+                  onFocus={() => typingFunction()}
+                  onBlur={() => typingRemoveFunction()}
                   onChange={(e) => dispatch(setInput1(e.target.value))}
+                  value={inputVal}
                 />
-                <button className="buttons">Send</button>
+                <button
+                  disabled={inputVal === "" || inputVal === false}
+                  className=" buttons"
+                >
+                  Send
+                </button>
               </form>
-            </span>
+            ) : (
+              false
+            )
+          ) : !checked && focus ? (
+            <form>
+              <textarea
+                placeholder="Type your message Here"
+                className="input1"
+                type="text"
+                onFocus={() => typingFunction()}
+                onBlur={() => typingRemoveFunction()}
+                onChange={(e) => dispatch(setInput1(e.target.value))}
+                value={inputVal}
+              />
+              <button
+                disabled={inputVal === "" || inputVal === false}
+                className=" buttons"
+              >
+                Send
+              </button>
+            </form>
+          ) : (
+            false
           )}
         </span>
-      </div>
+      </span>
+
+      {/* <span className="rightPart">
+          <span className="buttonSpan">
+            <button onClick={() => back()} className="back">
+              Back
+            </button>
+            <button className="button" onClick={logOut}>
+              Sign Out
+            </button>
+            <span className="settingSpan">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Windows_Settings_app_icon.png"
+                className="setting"
+                onClick={() => setting()}
+              />
+            </span>
+          </span>
+          <span className="rightPart2">
+            <p>Select User for chatting</p>
+          </span>
+        </span> */}
+
+      {/* )} */}
     </div>
   );
 };

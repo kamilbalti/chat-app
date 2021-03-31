@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
 const SignUp = () => {
   // const [pictureUrl, setPictureUrl] = useState("");
   // const [userArr, setUserArr ] = useState([])
-  const [ checkVal, setCheckVal ] = useState(false)
   const [ inputCheck, setInputCheck ] = useState(false)
   const [ inputType, setInputType ] =  useState("password")
   const [ picture, setPicture ] = useState("");
@@ -60,12 +59,11 @@ const SignUp = () => {
             tempUserDetails.userArr = userArr
             tempUserDetails.uid = res?.user?.uid
             tempUserDetails.profilePhoto = url;
-            
             firebase
             .database()
             .ref("Users/" + res?.user?.uid)
             .set({
-              details: tempUserDetails?tempUserDetails:{},
+              details: tempUserDetails ? tempUserDetails:{},
             })
             .then(() => {
               dispatch(setUser(res));
