@@ -373,6 +373,11 @@ input{
   
 }
 
+.fileInput{
+  /* padding: 30px; */
+  width: 60px;
+}
+
 .changeUser{
   font-size: 20px;
   font-weight: bold;

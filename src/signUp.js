@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import App from "./App";
-import firebase, { storage } from "./firebase";
+import firebase from "./firebase";
 import "./signIn.css";
 import {
   setCheck,
-  setDetail,
-  setPictureUrl,
   setUser,
-  setUser2,
-  setUserArr,
 } from "./store/action";
 import { Link } from "react-router-dom";
 const SignUp = () => {
@@ -18,9 +14,9 @@ const SignUp = () => {
   const [ inputCheck, setInputCheck ] = useState(false)
   const [ inputType, setInputType ] =  useState("password")
   const [ picture, setPicture ] = useState("");
-  const [ userCheck, setUserCheck ] = useState(false);
+  const [ userCheck ] = useState(false);
   const [ userName, setUserName ] = useState("");
-  const { user, userArr, detail, realArr } = useSelector((e) => e?.reducer1);
+  const { user, userArr } = useSelector((e) => e?.reducer1);
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const [ error, setError ] = useState(false);
