@@ -1,6 +1,6 @@
 import { Set_Detail, Set_Data, Set_Call, Set_Temp, Set_Sort, Set_Input1, Set_Input2, Set_Num, Set_RealArr, Set_RedoArr,
   Set_UndoArr, Set_User, Set_User2, Set_UserName, Set_UserArr, Set_PictureUrl, Set_Check, Set_UserDetail, Set_Focus, 
-  TYPING_STATUS, Set_TempArr, Set_CheckSetting, Set_Edit
+  TYPING_STATUS, Set_TempArr, Set_CheckSetting, Set_Edit, Set_DownloadingUrl, Set_SendPicture, Set_TempArr2
 } from "./actiontype";
 
 const initialState = {
@@ -24,8 +24,12 @@ const initialState = {
   focus: false,
   typingUsers: [],
   tempArr: [],
+  tempArr2: [],
   checkSetting: false,
-  edit: false
+  edit: false,
+  downloadingUrl: "",
+  // downloadingUrl: "https://firebasestorage.googleapis.com/v0/b/website-32599.appspot.com/o/file%2F1618058424028?alt=media&token=5d2d297f-7367-41ea-8e26-a97734dcab11",
+  sendPicture: false,
 };
 
 const Reducer = (state = initialState, action) => {
@@ -137,26 +141,44 @@ const Reducer = (state = initialState, action) => {
           tempArr: action.payload,
         };
 
+      case Set_TempArr2:
+        return {
+          ...state,
+          tempArr2: action.payload,
+        };
+
     case TYPING_STATUS:
-        console.log(action?.payload, "payload")
+        // console.log(action?.payload, "payload")
       return {
         ...state,
         typingUsers: action?.payload,
       };
 
     case Set_CheckSetting:
-        console.log(action?.payload, "payload")
+        // console.log(action?.payload, "payload")
       return {
         ...state,
         checkSetting: action?.payload,
       };
 
     case Set_Edit:
-        console.log(action?.payload, "payload")
+        // console.log(action?.payload, "payload")
       return {
         ...state,
         edit: action?.payload,
       };
+
+    case Set_DownloadingUrl:
+      return {
+        ...state,
+        downloadingUrl: action?.payload
+      }
+
+    case Set_SendPicture:
+      return {
+        ...state,
+        sendPicture: action?.payload
+      }
 
     default:
       return state;

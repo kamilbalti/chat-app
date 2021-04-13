@@ -1,12 +1,17 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { setCheckSetting, setEdit } from "../store/action";
+import { setCheckSetting, setDownloadingUrl, setEdit } from "../store/action";
 
 const CloseSetting = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() 
+    const { checkSetting, edit } = useSelector((e) => e?.reducer1);
     const close = () => {
-        dispatch(setCheckSetting(false));
-        dispatch(setEdit(false));
+        checkSetting || edit?
+        (
+        dispatch(setCheckSetting(false)) &&
+        dispatch(setEdit(false))
+):
+        dispatch(setDownloadingUrl(""))
       };
     return(
     <span className="closeSpan">

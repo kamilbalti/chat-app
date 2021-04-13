@@ -8,7 +8,7 @@ import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 const Result = () => {
   const dispatch = useDispatch();
   const chatRef = useRef();
-  const { detail, realArr, focus } = useSelector((e) => e?.reducer1);
+  const { detail, realArr, focus, tempArr2 } = useSelector((e) => e?.reducer1);
 
   useEffect(() => {
     if (focus)
@@ -17,7 +17,7 @@ const Result = () => {
         left: 0,
         // behavior: "smooth",
       });
-      console.log(chatRef.current.scrollHeight, "scrollHeight")
+      // console.log(chatRef.current.scrollHeight, "scrollHeight")
   }, [focus, realArr]);
 
   return (
@@ -36,6 +36,7 @@ const Result = () => {
               }
             >
               <p className="timeNow">{moment(item?.time).calendar()}</p>
+              {/* {item.inputValue? */}
               <p
                 className={
                   item?.sentBy === detail?.details?.uid
@@ -43,8 +44,15 @@ const Result = () => {
                     : "time3 resultPara"
                 }
               >
-                  {item.inputValue}
-              </p>
+                { item?.inputValue === "" && item?.pictureUrl !== ""  ||
+                  <span>
+                      <img className="sendingPic" src={item?.pictureUrl}/> 
+                  </span>
+                }
+                {item?.inputValue}
+              </p> 
+              {/* : */}
+              {/* } */}
             </div>
           </>
         ))

@@ -11,20 +11,22 @@ const uid = user?.uid;
 
   const onFocus = (uid1) => {
     dispatch(setInput1(""))
-    const messageId = [uid, uid1].sort().join("");
-    dispatch(setFocus("loading"));
-    setTimeout(
+    if(uid && uid1){ 
+      const messageId = [uid, uid1].sort().join("")
+      dispatch(setFocus("loading"));
+      setTimeout(
       () =>
         firebase
-          .database()
+        .database()
           .ref("messages/" + messageId)
           .on("value", (res) => {
             let tempArr = res?.val()?.message || [];
             dispatch(setRealArr(tempArr));
             dispatch(setFocus(uid1));
           }),
-      1000
-    );
+          1000
+          );
+        }
   };
 
 useEffect(() => {
@@ -51,7 +53,7 @@ useEffect(() => {
           dispatch(setDetail(ourData ? ourData : {}));
           dispatch(setUserArr(otherUsers ? otherUsers : []));
           dispatch(setTempArr(otherUsers || []));
-          console.log(tempArr, "tempArray");
+          // console.log(tempArr, "tempArray");
         });
       });
   }, [user]);

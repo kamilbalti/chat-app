@@ -1,6 +1,6 @@
 import { Set_Detail, Set_UserArr, Set_Input1, Set_Call, Set_Input2, Set_Num,
     Set_RealArr, Set_RedoArr, Set_Sort, Set_Temp, Set_UndoArr, Set_User,
-    Set_User2, Set_Data, Set_UserName, Set_PictureUrl, Set_Check, Set_UserDetail, Set_Focus, TYPING_STATUS, Set_TempArr, Set_CheckSetting, Set_Edit } from "./actiontype";
+    Set_User2, Set_Data, Set_UserName, Set_PictureUrl, Set_Check, Set_UserDetail, Set_Focus, TYPING_STATUS, Set_TempArr, Set_CheckSetting, Set_Edit, Set_DownloadingUrl, Set_SendPicture, Set_TempArr2 } from "./actiontype";
 
 export const setInput1 = (payload) => ({
     type: Set_Input1,
@@ -107,6 +107,11 @@ export const setTempArr = (payload) => ({
     payload,
 })
 
+export const setTempArr2 = (payload) => ({
+    type: Set_TempArr2,
+    payload,
+})
+
 export const setCheckSetting = (payload) => ({
     type: Set_CheckSetting,
     payload,
@@ -114,5 +119,15 @@ export const setCheckSetting = (payload) => ({
 
 export const setEdit = (payload) => ({
     type: Set_Edit,
+    payload,
+})
+
+export const setDownloadingUrl = (payload) => ({
+    type: Set_DownloadingUrl,
+    payload,
+})
+
+export const setSendPicture = (payload) => ({
+    type: Set_SendPicture,
     payload,
 })
