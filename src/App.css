@@ -128,7 +128,7 @@
   justify-content: flex-start;
   align-items: center;
   border: 1px solid rgba(184, 182, 182, 0.863);
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .input1{
@@ -273,6 +273,7 @@ cursor: pointer;
   display: flex;
   flex-direction: row;
   align-self: center;
+  cursor: pointer;
 }
 
 .userPara{
@@ -284,9 +285,17 @@ cursor: pointer;
 }
 
 .userPara2{
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
+}
+
+.modalPic{
+  background-color: red;
+  width: 100%;
+  height: 60vh;
 }
 
 .userPara3{
@@ -411,10 +420,14 @@ input{
 }
 
 .sendingPic{
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 400px;
 }
-
+.picDiv {
+  max-width: 420px;
+  margin-left: auto;
+}
 .fileInput{
   opacity: 0;
   height: 52px;
@@ -441,8 +454,8 @@ input{
 }
 
 .pic3{
-  width: 100px;
-  height: 80%;
+  width: 120px;
+  height: 80px;
   margin-right: 10px;
 }
 
@@ -478,9 +491,10 @@ input{
   border-right: 0;
   width: 100%;
   height: 20%;
-  margin-top: 13px;
+  /* margin-top: 13px 10px; */
+  padding-left: 10px;
   margin-bottom: 13px;
-  padding: 0 10px;
+  /* padding: 0 10px; */
 }
 
 .App-logo {
@@ -601,6 +615,10 @@ input{
     padding: 0;
     font-size: 14px;
     height: 30px;
+  }
+
+  .userPara4{
+    width: 100%;
   }
 
   .setting{

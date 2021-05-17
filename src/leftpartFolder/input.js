@@ -15,7 +15,7 @@ const Input = () => {
       useEffect(() => {
         dispatch(
           setUserArr(
-            userArr?.filter((item, index) =>
+            userArr?.filter((item) =>
               item.details.username.toLowerCase().includes(search.toLowerCase())
             )
           )
@@ -26,7 +26,7 @@ const Input = () => {
     <input
     className="searchingInput"
     type="text"
-    placeholder="Search UserName Here"
+    placeholder="Search Username Here"
     value={search}
     onChange={(e) => searching(e)}
   />

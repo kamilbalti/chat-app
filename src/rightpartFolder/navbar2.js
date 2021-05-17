@@ -12,9 +12,11 @@ import firebase from "../firebase";
 import CloseSetting from "./closeSetting";
 import Setting from "./settingPage";
 import ProfileEditing from "./ProfileEditing";
+import CustomModal from "../Component/Modal";
 
 const Navbar2 = () => {
   const [userName2, setUserName2] = useState("");
+  const [showModal, setShowModal] = useState(false);
   // const [edit, setEdit] = useState(false);
   // const [checkSetting, setCheckSetting] = useState(false);
   const {
@@ -44,7 +46,7 @@ const Navbar2 = () => {
           .update({
             onlineStatus: Date.now() - 16000,
           });
-        dispatch(setUser(false));
+          dispatch(setUser(false));
       });
   };
 
@@ -75,19 +77,27 @@ const Navbar2 = () => {
 
   return (
     <>
+    
       <span className="buttonSpan">
         <button onClick={() => back()} className="back">
           Back
         </button>
+        {!!showModal && (
+              <CustomModal open={showModal} onClose={() => setShowModal(false)}>
+                {/* <h1>ABC</h1> */}
+                <img className="modalPic" src={showModal} />
+              </CustomModal>
+        )}
         {focus && focus !== "loading" ? (
-          <img
+          <img onClick={() => setShowModal(focusedUser?.details?.profilePhoto)}
             className="profilePic"
             src={focusedUser?.details?.profilePhoto}
             width="55px"
             height="55px"
             alt={"profile-pic"}
-          />
+            />
         ) : (
+          // !!showModal ?
           false
         )}
         <span
@@ -98,7 +108,7 @@ const Navbar2 = () => {
             ) !== -1 &&
             typingUsers
               ? "userPara3"
-              : "userPara userPara2"
+              : "userPara"
           }
         >
           <p className="profileName">{focusedUser?.details?.username}</p>
@@ -127,6 +137,7 @@ const Navbar2 = () => {
             <Setting />
           ) : (
             <ProfileEditing />
+
             //   <span className="labelPara">
             //     <span className="changeUserSpan">
             //       <p className="changeUser">UserName :</p>

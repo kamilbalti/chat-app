@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { setCheckSetting, setDownloadingUrl, setEdit } from "../store/action";
+import { setCheckSetting, setDownloadingUrl, setEdit, setTempArr2, setTempCheck } from "../store/action";
 
 const CloseSetting = () => {
     const dispatch = useDispatch() 
@@ -10,8 +10,10 @@ const CloseSetting = () => {
         (
         dispatch(setCheckSetting(false)) &&
         dispatch(setEdit(false))
-):
-        dispatch(setDownloadingUrl(""))
+        ):
+        dispatch(setDownloadingUrl("")) &&
+        dispatch(setTempArr2([])) &&
+        dispatch(setTempCheck(false))
       };
     return(
     <span className="closeSpan">

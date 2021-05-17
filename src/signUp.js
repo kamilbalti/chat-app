@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import App from "./App";
 import firebase from "./firebase";
 import "./signIn.css";
-import {
-  setCheck,
-  setUser,
-} from "./store/action";
+import { setCheck, setUser } from "./store/action";
 import { Link } from "react-router-dom";
 const SignUp = () => {
   // const [pictureUrl, setPictureUrl] = useState("");
@@ -83,6 +80,7 @@ const SignUp = () => {
       })
       .catch((err) => {
         setError(err);
+        setUser(false)
         setTimeout(() => setError(false), 1500);
       });
   };

@@ -9,11 +9,12 @@ import Navbar2 from "./navbar2";
 import Result from "./result";
 import Button from "./buttons";
 import CloseSetting from "./closeSetting";
-import { setDownloadingUrl, setSendPicture } from "../store/action";
+import { setSendPicture } from "../store/action";
+// import Adsense from "./adsense";
 
 const RightPart = () => {
   const dispatch = useDispatch()
-  const { focus, downloadingUrl, tempArr2 } = useSelector((e) => e?.reducer1);
+  const { focus, downloadingUrl, tempArr2, user } = useSelector((e) => e?.reducer1);
 
   const send = () => {
     dispatch(setSendPicture(true))
@@ -22,12 +23,16 @@ const RightPart = () => {
 
   return (
     <div className="mainDiv">
+      {/* {user?
+      <Adsense /> :
+      false} */}
       <span className={(focus ? "rightPart3 " : " ") + " rightPart "}>
         <Navbar2 />
         <span className="paraDiv">
           {
-          downloadingUrl !== "" ?
-          <div className="rightPart bgGray">
+
+          tempArr2 !== [] && downloadingUrl !== "" ?
+          <div className="bgGray">
             <span className="closeSpan">
               <CloseSetting />
             </span>

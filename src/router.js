@@ -15,16 +15,9 @@ const Router2 = () => {
       dispatch(setUser(isUser));
     });
   }, []);
-  if (user === "loading")
+  if (user === "loading" )
     return (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
         <Spinner padding="100px" animation="border" variant={"success"} />
       </div>
     );
@@ -38,7 +31,7 @@ const Router2 = () => {
   return (
     <Router>
       <Route exact path={"/"} component={SignIn} />
-      <Route path={"/SignUp"} component={SignUp} />
+      <Route exact path={"/SignUp"} component={SignUp} />
     </Router>
   );
 };

@@ -1,11 +1,13 @@
-import React,{ useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import firebase from "../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { setCheck, setDetail, setFocus, setInput1, setRealArr, setTempArr, setTypingUsers, setUserArr } 
 from "../store/action";
+import CustomModal from "../Component/Modal";
 
 const Detail = () => {
 const { focus, user, detail, userArr, typingUsers, realArr, tempArr } = useSelector((e) => e?.reducer1);
+const [showModal, setShowModal] = useState(false);
 const dispatch = useDispatch()
 const uid = user?.uid;
 
@@ -60,13 +62,22 @@ useEffect(() => {
 
   return (
           <>
+            {!!showModal && (
+                <CustomModal open={showModal} onClose={() => setShowModal(false)}>
+                  {/* <h1>ABC</h1> */}
+                  <img className="modalPic" src={showModal} />
+                </CustomModal>
+            )}
             <span className="userName">
               {Array.isArray(userArr)
                 ? userArr?.map((item2, index2) => (
-                    <div key={index2} className={"userListDiv"} onClick={() => onFocus(item2.details.uid)}>
-                      <img className="profilePic" src={item2?.details?.profilePhoto} width="55px" height="55px"/>
-                      <span className={ Array.isArray(typingUsers) && typingUsers?.indexOf( [item2?.details?.uid, uid].sort()
-                      .join("") ) !== -1 && typingUsers ? "userPara3" : "userPara userPara2" } >
+                    <div key={index2} className={"userListDiv"}>
+                      <img onClick={() => setShowModal(item2?.details?.profilePhoto)} className="profilePic" 
+                      src={item2?.details?.profilePhoto} width="55px" height="55px"/>
+                      
+                      <span onClick={() => onFocus(item2.details.uid)} className={ Array.isArray(typingUsers) &&
+                      typingUsers?.indexOf( [item2?.details?.uid, uid].sort().join("") ) !== -1 && typingUsers ? 
+                      "userPara3" : "userPara userPara2 userPara4" }>
                         <p className="userName2">{item2?.details?.username}</p>
                         {Array.isArray(typingUsers) &&
                         typingUsers?.indexOf(

@@ -7,6 +7,8 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import Router2 from "./router";
 import "bootstrap/dist/css/bootstrap.min.css";
+import App from "./App";
+import { Router } from "react-router";
 
 const store = createStore(
   RootReducer,
