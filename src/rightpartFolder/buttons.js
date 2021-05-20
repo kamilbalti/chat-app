@@ -192,7 +192,7 @@ const Button = () => {
         <form className={"inputDiv"} onSubmit={onsubmit}>
           <span className={inputSpanName} onMouseEnter={() => setInputSpanName(inputSpanName + " fileSpan2")}
             onMouseOut={() => setInputSpanName("fileSpan")} onClick={() => setInputSpanName("fileSpan")}>
-            <input className="fileInput" type="file" ref={inputRef} onChange={(e) => changeFileInput(e)}/>
+            <input className="fileInput" type="file" ref={inputRef} onChange={(e) => changeFileInput(e)} />
           </span>
           <span className={downloadingUrl === ""? "visible" : "hidden" }>
             <input placeholder="Type your message Here" className="input1" type="text" onFocus={() => typingFunction()}

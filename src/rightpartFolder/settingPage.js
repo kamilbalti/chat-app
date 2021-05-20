@@ -21,7 +21,7 @@ const Setting = () => {
   };
   return(
     <span className="labelPara">
-        <p onClick={() => editCheck()}>Edit profile</p>
+        <p className="settingOpt" onClick={() => editCheck()}>Edit profile</p>
         <button onClick={() => save()} className="button"> Save </button>
     </span>
 )}

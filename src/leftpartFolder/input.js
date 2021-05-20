@@ -16,7 +16,7 @@ const Input = () => {
         dispatch(
           setUserArr(
             userArr?.filter((item) =>
-              item.details.username.toLowerCase().includes(search.toLowerCase())
+              item?.details?.username.toLowerCase().includes(search.toLowerCase())
             )
           )
         );
